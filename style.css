@@ -1,0 +1,57 @@
+/* Este es tu archivo de estilos. 
+  Contiene los estilos que ya tenías más los nuevos.
+*/
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FDFBF5;
+}
+
+/* Estilos para el cupón bloqueado */
+.coupon-locked {
+    background-image: linear-gradient(to right, #6b7280 10px, transparent 10px), linear-gradient(to bottom, #6b7280 10px, transparent 10px),
+                      linear-gradient(to right, #d1d5db 1px, transparent 1px), linear-gradient(to bottom, #d1d5db 1px, transparent 1px);
+    background-size: 110px 60px, 60px 110px, 10px 10px, 10px 10px;
+    background-color: #f3f4f6;
+    border: 2px dashed #9ca3af;
+}
+
+.coupon-locked .lock-icon {
+    font-size: 4rem;
+    line-height: 1;
+    color: #9ca3af;
+}
+
+/* ======================================================
+  ¡NUEVO! ESTILO PARA EL CUPÓN CANJEADO
+  ======================================================
+*/
+.coupon-redeemed .bg-white {
+    /* Le pone una opacidad para que se vea "usado" */
+    opacity: 0.6; 
+}
+
+.coupon-redeemed .redeem-overlay {
+    /* Este es el "tachón" rojo */
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    right: 5%;
+    height: 4px;
+    background-color: #ef4444; /* Rojo */
+    transform: rotate(-5deg) translateY(-50%);
+    opacity: 0.8;
+    text-align: center;
+    
+    /* Estilo del texto "CANJEADO" */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}

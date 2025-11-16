@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    
+    <!-- 1. Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Carga de las fuentes (Inter y Dancing Script) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- 3. Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive']
+                    },
+                    colors: {
+                        'brand-ivory': '#FDFBF5',
+                        'brand-gold': '#d4af37',
+                        'brand-wine': '#722f37',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 4. Conexión a tu archivo de estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="bg-brand-ivory text-gray-900 p-6 md:p-12">
+
+    <!-- Estructura que ya tenías -->
+    <header class="text-center mb-12">
+        <h1 class="font-script text-5xl md:text-6xl text-gray-800">Feliz Cumpleaños Amor, 30 no se cumplen todos los días.</h1>
+        <p class="font-script text-3xl text-brand-wine mt-2">Tu Cuponera de Regalos 2026</p>
+    </header>
+
+    <main>
+
+        <!-- 
+        ======================================================
+        ¡NUEVA SECCIÓN DE TEASER!
+        Aparecerá solo el día del cumpleaños.
+        Está oculta ("hidden") por defecto y tu script.js la controla.
+        ======================================================
+        -->
+        <section id="teaser-section" class="mb-12 hidden">
+            <h2 class="font-script text-4xl text-gray-700 mb-6">¡Falta un mes!</h2>
+            <h2 class="font-script text-4xl text-gray-700 mb-6">Demos una pequeña vista al futuro</h2>
+            <div 
+                id="teaser-card" 
+                class="coupon-locked rounded-lg p-8 flex flex-col items-center justify-center text-center h-56 cursor-pointer transform transition-all hover:scale-105"
+            >
+                <!-- Este contenido será reemplazado por JavaScript -->
+                <div class="lock-icon" style="font-size: 3rem;">🎁</div>
+                <h3 class="font-script text-3xl text-gray-600 mt-4">¡Premio Sorpresa!</h3>
+                <p class="text-gray-500 font-semibold">Haz clic aquí para un adelanto "aleatorio" de tu próximo regalo...</p>
+            </div>
+        </section>
+        <!-- ====================================================== -->
+
+
+        <!-- Estructura que ya tenías -->
+        <section class="mb-16">
+            <h2 class="font-script text-4xl text-gray-700 mb-6">Tus Cupones Desbloqueables</h2>
+            <div id="coupons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Los cupones se insertarán aquí por JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Estructura que ya tenías -->
+    <footer class="text-center mt-16 border-t border-gray-300 pt-8">
+        <p class="text-gray-600">Hecho con <span class="text-red-500">&hearts;</span> por tu esposo.</p>
+    </footer>
+
+    <!-- Conexión a tu archivo de lógica JavaScript -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
