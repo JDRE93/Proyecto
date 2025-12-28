@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Cumpleaños, Mi Amor</title>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -28,78 +30,339 @@
             }
         }
     </script>
-    
-    <link rel="stylesheet" href="style.css">
 
+    <style>
+        body { background-color: #FDFBF5; margin: 0; padding: 0; }
+        header, section, footer { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+
+        /* ANIMACIONES PREMIUM */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .coupon-animate {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        /* Estilos del Contador */
+        .countdown-container {
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #d4af37;
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #722f37;
+            line-height: 1;
+        }
+        .countdown-label {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+
+        /* Cupones Bloqueados */
+        .coupon-locked {
+            background-color: #f3f4f6;
+            border: 2px dashed #9ca3af;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+        .coupon-locked-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) blur(5px);
+            opacity: 0.25;
+            z-index: 1;
+        }
+        .lock-icon {
+            font-size: 3.5rem;
+            z-index: 10;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilo Canjeado - Efecto Visual Agresivo */
+        .coupon-redeemed { 
+            opacity: 0.7 !important; 
+            filter: grayscale(0.8) !important;
+        }
+        
+        /* Tachado forzado con selector específico */
+        .text-strike {
+            text-decoration: line-through !important;
+            text-decoration-color: #ef4444 !important;
+            text-decoration-thickness: 3px !important;
+            color: #9ca3af !important;
+        }
+
+        .redeem-overlay {
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            background-color: #ef4444;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.75rem;
+            transform: rotate(-12deg) translateY(-50%);
+            z-index: 50;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-align: center;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body class="bg-brand-ivory text-gray-900 p-6 md:p-12">
+<body class="p-4 md:p-10">
 
-    <header class="text-center mb-12">
-        <h1 class="font-script text-5xl md:text-6xl text-gray-800">Feliz Cumpleaños, Mi Amor</h1>
-        <p class="font-script text-3xl text-brand-wine mt-2">Tu Cuponera de Regalos 2026</p>
+    <header class="mb-10 pt-6">
+        <h1 class="font-script text-5xl md:text-7xl text-gray-800">Feliz Cumpleaños, Mi Amor</h1>
+        <p class="font-script text-2xl text-brand-wine mt-4">Tu Cuponera de Regalos 2026</p>
     </header>
 
-    <main>
-
-        <section id="countdown-section" class="mb-12 text-center hidden">
-            <h2 class="font-script text-4xl text-gray-700 mb-6">Tu regalo comienza en...</h2>
-            <div class="countdown-container flex justify-center space-x-4 md:space-x-8">
-                <div class="countdown-box">
-                    <div id="timer-days" class="countdown-number">00</div>
-                    <div class="countdown-label">Días</div>
-                </div>
-                <div class="countdown-box">
-                    <div id="timer-hours" class="countdown-number">00</div>
-                    <div class="countdown-label">Horas</div>
-                </div>
-                <div class="countdown-box">
-                    <div id="timer-minutes" class="countdown-number">00</div>
-                    <div class="countdown-label">Minutos</div>
-                </div>
-                <div class="countdown-box">
-                    <div id="timer-seconds" class="countdown-number">00</div>
-                    <div class="countdown-label">Segundos</div>
-                </div>
+    <main class="max-w-6xl mx-auto">
+        
+        <!-- FASE 1 & 2: CONTADOR -->
+        <section id="countdown-section" class="mb-16 hidden">
+            <h2 class="font-script text-3xl mb-4 text-gray-700">Tu año de sorpresas comienza en...</h2>
+            <div class="countdown-container">
+                <div><div id="days" class="countdown-number">00</div><div class="countdown-label">Días</div></div>
+                <div><div id="hours" class="countdown-number">00</div><div class="countdown-label">Horas</div></div>
+                <div><div id="mins" class="countdown-number">00</div><div class="countdown-label">Mins</div></div>
+                <div><div id="secs" class="countdown-number">00</div><div class="countdown-label">Segs</div></div>
             </div>
         </section>
 
-
-        <section id="teaser-section" class="mb-12 hidden">
-            <h2 class="font-script text-4xl text-gray-700 mb-6">¡Un Vistazo al Futuro!</h2>
-            <div 
-                id="teaser-card" 
-                class="coupon-locked rounded-lg p-8 flex flex-col items-center justify-center text-center cursor-pointer transform transition-all hover:scale-105 min-h-[14rem]"
-            >
-                <div class="lock-icon" style="font-size: 3rem;">🎁</div>
-                <h3 class="font-script text-3xl text-gray-600 mt-4 z-10 relative">¡Premio Sorpresa!</h3>
-                <p class="text-gray-500 font-semibold z-10 relative">Haz clic aquí para un adelanto "aleatorio" de tu próximo regalo...</p>
+        <!-- FASE 2: CAJA SORPRESA -->
+        <section id="teaser-section" class="mb-16 hidden">
+            <h2 class="font-script text-4xl mb-6 text-brand-wine">¡Un Regalo Anticipado!</h2>
+            <div id="teaser-card" class="coupon-locked rounded-xl p-10 cursor-pointer hover:scale-105 transition-all max-w-lg mx-auto shadow-xl">
+                <div class="lock-icon">🎁</div>
+                <h3 class="font-script text-3xl text-gray-700 relative z-10 text-center">Toca para abrir...</h3>
             </div>
         </section>
 
+        <!-- FASE 3: CUPONERA COMPLETA -->
+        <section id="coupons-section" class="hidden">
+            <h2 class="font-script text-5xl text-gray-800 mb-6">Tus Eventos del Año</h2>
+            <p class="text-gray-600 mb-10 max-w-2xl mx-auto">Estos cupones se desbloquean automáticamente en las fechas indicadas. ¡Cada mes tendrá algo especial!</p>
+            <div id="date-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20"></div>
 
-        <section id="coupons-section" class="mb-16 hidden">
-            
-            <h2 class="font-script text-4xl text-gray-700 mb-6">Tus Regalos del Año</h2>
-            <p class="text-lg text-gray-600 mb-6 -mt-4">Estos son los grandes regalos. Se desbloquearán (o ya se desbloquearon) en su fecha.</p>
-            <div id="date-coupons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                </div>
+            <hr class="border-dashed border-gray-300 mb-16">
 
-            <hr class="my-12 border-gray-300 border-dashed">
-
-            <h2 class="font-script text-4xl text-gray-700 mb-6">Talonario "On-Demand"</h2>
-            <p class="text-lg text-gray-600 mb-6 -mt-4">Estos cupones están siempre listos. ¡Canjéalos cuando quieras!</p>
-            <div id="demand-coupons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                </div>
-            
+            <h2 class="font-script text-5xl text-gray-800 mb-6">Talonario "A Tu Antojo"</h2>
+            <p class="text-gray-600 mb-10 max-w-2xl mx-auto">Úsalos cuando quieras. Son válidos en cualquier momento que necesites un mimo o un escape.</p>
+            <div id="demand-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
         </section>
 
     </main>
-    
-    <footer class="text-center mt-16 border-t border-gray-300 pt-8">
-        <p class="text-gray-600">Hecho con <span class="text-red-500">&hearts;</span> por tu esposo.</p>
+
+    <footer class="mt-24 py-10 opacity-60 text-sm italic border-t border-gray-200 text-center">
+        Diseñado con todo mi amor para la mujer de mi vida.
     </footer>
 
-    <script src="script.js" defer></script>
+    <script>
+        // ======================================================
+        // DATA DE TODOS LOS CUPONES
+        // ======================================================
+        const coupons = [
+            // --- EVENTOS CON FECHA ---
+            { id: 'cumple', unlockDate: '2026-01-03T00:00:00', title: '¡Feliz Cumpleaños!', description: 'Hoy eres la Reina. Cero quehaceres, tu comida favorita y control total del mando.', imageUrl: './img/cumple.jpg', category: 'Día Especial' },
+            { id: 'medellin', unlockDate: '2026-02-13T08:00:00', title: 'Aniversario en Medellín', description: 'Escapada romántica a la Eterna Primavera. Solo tú y yo celebrando nuestro amor.', imageUrl: './img/especial-medellin.jpg', category: 'Día Especial' },
+            { id: 'cartagena', unlockDate: '2026-02-28T08:00:00', title: 'Cartagena con Mamá', description: '¡Sol, brisa y mar! Te vas de viaje con tu mamá para disfrutar juntas de la heroica.', imageUrl: './img/cartagena.png', category: 'Día Especial' },
+            
+            // --- ROMÁNTICOS ---
+            { id: 'rom-01', title: 'Chuchitos Ilimitados', description: 'Vale por una sesión de besitos infinitos en el momento que tú quieras.', imageUrl: './img/romantico-01.jpg', category: 'Romántico' },
+            { id: 'rom-10', title: 'Carta del Futuro', description: 'Te escribiré una carta hablándote de lo que siento hoy y de todo lo que sueño contigo.', imageUrl: './img/romantico-carta.jpg', category: 'Romántico' },
+            { id: 'rom-11', title: 'Noche Sin Teléfonos', description: 'Una noche completa solo tú y yo. El mundo puede esperar.', imageUrl: './img/romantico-nophone.jpg', category: 'Romántico' },
+            { id: 'rom-03', title: 'Cita Sorpresa', description: 'Yo me encargo de todo. Tú solo vístete para una noche increíble.', imageUrl: './img/romantico-03.jpg', category: 'Romántico' },
+            
+            // --- RELAJACIÓN ---
+            { id: 'rel-06', title: 'Día Sin Decisiones', description: 'Hoy no decides nada. Yo me encargo absolutamente de todo por ti.', imageUrl: './img/relax-decision.jpg', category: 'Relajación' },
+            { id: 'rel-01', title: 'Masaje de Pies VIP', description: '20 minutos de masaje relajante para descansar de todo el día.', imageUrl: './img/romantico-06.jpg', category: 'Relajación' },
+            { id: 'rel-07', title: 'Tarde de Silencio', description: 'Sin hablar, sin planes, solo paz, calma y compañía.', imageUrl: './img/relax-silencio.jpg', category: 'Relajación' },
 
+            // --- FAMILIAR ---
+            { id: 'fam-09', title: 'Nuestra Tradición', description: 'Crearemos una tradición solo nuestra para repetir juntos cada año.', imageUrl: './img/familiar-tradicion.jpg', category: 'Familiar' },
+            { id: 'fam-01', title: 'El Primer Juguete', description: 'Vamos juntos a comprar la primera cosita para nuestro futuro hij@.', imageUrl: './img/familiar-01.jpg', category: 'Familiar' },
+
+            // --- SEXY ---
+            { id: 'sex-09', title: 'Noche Lenta', description: 'Sin afán. Sin reloj. Sin interrupciones. Solo nosotros.', imageUrl: './img/sexy-lento.jpg', category: 'Sexy' },
+            { id: 'sex-10', title: 'Tú Mandas', description: 'Esta noche todo lo decides tú. Yo obedezco.', imageUrl: './img/sexy-mandas.jpg', category: 'Sexy' },
+            { id: 'sex-03', title: 'Garantía de Placer', description: 'Esta noche yo hago todo el trabajo. Tú solo disfruta.', imageUrl: './img/sexy-03.jpg', category: 'Sexy' },
+            { id: 'sex-06', title: 'El Rapidín', description: 'Un encuentro intenso donde sea y cuando sea.', imageUrl: './img/sexy-06.jpg', category: 'Sexy' },
+            { id: 'esp-03', title: 'Fantasía en Medellín', description: 'Masaje erótico profesional realizado por una chica (yo observando).', imageUrl: './img/especial-fantasia.jpg', category: 'Día Especial' }
+        ];
+
+        const categoryStyles = {
+            'Romántico': 'bg-pink-100 text-pink-800',
+            'Familiar': 'bg-green-100 text-green-800',
+            'Relajación': 'bg-blue-100 text-blue-800',
+            'Sexy': 'bg-red-100 text-red-800',
+            'Día Especial': 'bg-yellow-100 text-yellow-800',
+            'Default': 'bg-gray-100 text-gray-800'
+        };
+
+        const today = new Date(); 
+        const birthdayDate = new Date('2025-01-03T00:00:00');
+        const teaserDate = new Date('2025-12-03T00:00:00');
+
+        function getRedeemed() { return JSON.parse(localStorage.getItem('redeemed') || '{}'); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (today < teaserDate) {
+                showCountdown();
+            } else if (today < birthdayDate) {
+                showCountdown();
+                showTeaser();
+            } else {
+                showCoupons();
+            }
+        });
+
+        function showCountdown() {
+            const section = document.getElementById('countdown-section');
+            if (!section) return;
+            section.classList.remove('hidden');
+            const itv = setInterval(() => {
+                const dist = birthdayDate - new Date();
+                if (dist < 0) { clearInterval(itv); window.location.reload(); return; }
+                document.getElementById('days').innerText = Math.floor(dist / 86400000).toString().padStart(2,'0');
+                document.getElementById('hours').innerText = Math.floor((dist % 86400000) / 3600000).toString().padStart(2,'0');
+                document.getElementById('mins').innerText = Math.floor((dist % 3600000) / 60000).toString().padStart(2,'0');
+                document.getElementById('secs').innerText = Math.floor((dist % 60000) / 1000).toString().padStart(2,'0');
+            }, 1000);
+        }
+
+        function showTeaser() {
+            const sec = document.getElementById('teaser-section');
+            if (!sec) return;
+            sec.classList.remove('hidden');
+            const card = document.getElementById('teaser-card');
+            card.onclick = () => {
+                const item = coupons.find(c => c.id === 'cartagena');
+                card.classList.remove('coupon-locked');
+                card.style.background = 'white';
+                card.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-2xl overflow-hidden w-full max-w-md mx-auto scale-110 duration-300 coupon-animate">
+                        <img src="${item.imageUrl}" class="w-full h-56 object-contain bg-gray-50">
+                        <div class="p-8 text-center">
+                            <h3 class="font-script text-4xl text-brand-wine">¡Un Adelanto!</h3>
+                            <p class="font-bold text-xl my-3">${item.title}</p>
+                            <p class="text-sm text-gray-500 italic">Podrás canjearlo el 28 de febrero</p>
+                        </div>
+                    </div>`;
+            };
+        }
+
+        function showCoupons() {
+            const section = document.getElementById('coupons-section');
+            if (!section) return;
+            section.classList.remove('hidden');
+            const redeemed = getRedeemed();
+            const dateCont = document.getElementById('date-container');
+            const demandCont = document.getElementById('demand-container');
+
+            coupons.forEach(c => {
+                const redeemedDate = redeemed[c.id]; 
+                const isLocked = c.unlockDate && new Date(c.unlockDate) > today;
+                const html = isLocked ? createLocked(c) : createUnlocked(c, redeemedDate);
+                (c.unlockDate ? dateCont : demandCont).innerHTML += `<div id="slot-${c.id}" class="h-full coupon-animate">${html}</div>`;
+            });
+        }
+
+        function createUnlocked(c, redeemedDate) {
+            const style = categoryStyles[c.category] || categoryStyles.Default;
+            // Si redeemedDate existe, aplicamos la clase de tachado inmediatamente al generar el HTML
+            const strikeClass = redeemedDate ? 'text-strike' : '';
+            const redeemedStateClass = redeemedDate ? 'coupon-redeemed' : '';
+            
+            return `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-brand-gold h-full flex flex-col transform transition-transform hover:-translate-y-2 relative ${redeemedStateClass}">
+                    <img src="${c.imageUrl}" class="w-full h-52 object-cover" onerror="this.src='https://placehold.co/400x300?text=Cargando+Foto...'">
+                    <div class="p-6 flex-grow text-center">
+                        <span class="${style} text-[10px] px-3 py-1 rounded-full uppercase font-bold tracking-wider">${c.category}</span>
+                        <h3 class="font-script text-3xl my-3 text-gray-800 ${strikeClass}">${c.title}</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed ${strikeClass}">${c.description}</p>
+                    </div>
+                    <div class="p-6 pt-0 text-center">
+                        <button onclick="redeem('${c.id}')" class="w-full bg-brand-wine text-white py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all ${redeemedDate ? 'hidden' : ''}">
+                            Canjear Ahora
+                        </button>
+                        ${redeemedDate ? `<p class="text-[10px] mt-2 italic text-gray-400">Canjeado el ${new Date(redeemedDate).toLocaleDateString('es-ES')}</p>` : ''}
+                    </div>
+                    ${redeemedDate ? '<div class="redeem-overlay">CANJEADO</div>' : ''}
+                </div>`;
+        }
+
+        function createLocked(c) {
+            const date = new Date(c.unlockDate).toLocaleDateString('es-ES', {day:'numeric', month:'long'});
+            return `
+                <div class="coupon-locked rounded-xl p-8 text-center h-full shadow-inner border-2 border-dashed border-gray-300">
+                    <img src="${c.imageUrl}" class="coupon-locked-image">
+                    <div class="lock-icon text-gray-400">🔒</div>
+                    <p class="font-bold text-gray-600 text-lg relative z-10">Bloqueado</p>
+                    <p class="text-sm text-gray-500 relative z-10">Se desbloquea el ${date}</p>
+                </div>`;
+        }
+
+        window.redeem = function(id) {
+            const redeemed = getRedeemed();
+            if (redeemed[id]) return;
+
+            const c = coupons.find(x => x.id === id);
+            const msg = `Este momento es solo tuyo 💛\n\n¿Segura que quieres canjear:\n"${c.title}"?\n\nPrometo hacerlo inolvidable.`;
+            
+            if (!confirm(msg)) return;
+            
+            // Efecto visual inmediato
+            const slot = document.getElementById(`slot-${id}`);
+            if (slot) {
+                const card = slot.querySelector('div');
+                card.classList.add('coupon-redeemed');
+                const titles = card.querySelectorAll('h3, p');
+                titles.forEach(t => t.classList.add('text-strike'));
+                const btn = card.querySelector('button');
+                if (btn) btn.classList.add('hidden');
+                
+                if (!card.querySelector('.redeem-overlay')) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'redeem-overlay';
+                    overlay.innerText = 'CANJEADO';
+                    card.appendChild(overlay);
+                }
+            }
+
+            // Guardamos en LocalStorage
+            redeemed[id] = new Date().toISOString();
+            localStorage.setItem('redeemed', JSON.stringify(redeemed));
+            
+            const tuEmail = 'TU_EMAIL_AQUI@gmail.com'; 
+            const subject = encodeURIComponent(`¡Cupón Canjeado: ${c.title}!`);
+            const body = encodeURIComponent(`¡Hola mi amor!\n\nAcabo de canjear mi cupón de: "${c.title}"\n\n¿Estás listo?\n\nTe amo.`);
+            
+            // Retrasar el mailto para que se vea el cambio visual
+            setTimeout(() => {
+                window.location.href = `mailto:${tuEmail}?subject=${subject}&body=${body}`;
+                // Recargamos después de un tiempo prudente para asegurar que la UI refleje el cambio guardado
+                setTimeout(() => window.location.reload(), 3000);
+            }, 600);
+        };
+    </script>
 </body>
 </html>
